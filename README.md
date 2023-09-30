@@ -47,3 +47,32 @@ To upgrade a helm chart use `helm upgrade [RELEASE_NAME] [REPO/CHARTNAME]` comma
 You could install and upgrade a helm chart using a different values file using `--values` or `-f` flag.
 
 ## How to install dependency charts
+
+To add a helm chart as a dependency, e.g grafana you could add the following config in the `Chart.yaml` file
+
+```yaml
+dependencies:
+- name: grafana
+  version: 6.60.1
+  condition: grafana.enabled
+  repository: https://grafana.github.io/helm-charts
+```
+
+then to pull the dependency run `helm dep update`.
+
+In order for the grafana to run make sure the following config is present in the `values.yaml`
+
+```yaml
+grafana:
+  enabled: true
+```
+
+Additionally if you think a certain dependency will always be enabled you could use the following config in the `Chart.yaml` instead:
+
+```yaml
+dependencies:
+- name: grafana
+  version: 6.60.1
+  enabled: true
+  repository: https://grafana.github.io/helm-charts
+```
