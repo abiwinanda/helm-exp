@@ -1,0 +1,23 @@
+image:
+  repository: {{ .Values.image.repository }}
+
+{{ if .Values.ingress.enabled -}}
+ingress: "enabled"
+{{ else -}}
+ingress: "disabled"
+{{- end }}
+
+autoscaling:
+{{ .Values.autoscaling | toYaml | indent 2 }}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  {{ include "ingressHosts" . }}
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

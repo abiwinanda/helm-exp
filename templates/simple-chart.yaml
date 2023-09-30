@@ -1,0 +1,7 @@
+name: {{ .Chart.Name }}
+description: {{ .Chart.Description | quote }}
+descriptionUpper: {{ upper .Chart.Description | quote }}
+
+default: {{ default "default" .Chart.Description }}
+
+type: {{ .Chart.Type }}
